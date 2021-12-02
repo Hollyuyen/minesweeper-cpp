@@ -9,9 +9,10 @@ class MineCell {
         hasBomb=(bool)cellHasBomb;
         revealed = false;
         neighborBombsCount = 0;
+        flagged = false;
     };
 
     int x, y, neighborBombsCount;
 
-    bool hasBomb, revealed;
+    bool hasBomb, revealed, flagged;
 };

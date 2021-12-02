@@ -1,6 +1,8 @@
 #include <iostream>
 #include <future>
 #include <random>
+#include <ctime>
+#include <sstream>
 
 #include "MinesweeperColors.h"
 
@@ -32,6 +34,18 @@ class MinesweeperUtils {
 
     void pauseConsole(bool includeMessage);
     // pause console - with or without prompting message
+
+    vector <string> splitString(string str, string splitter);
+    // split the string with given splitter
+
+    int stoi(string str);
+    // convert string to int
+
+    string toDateString(long epoch);
+    // convert unix timestamp to human readable time
+
+    string convertTime(long seconds);
+    // convert seconds to AhBmCs
 };
 
 void MinesweeperUtils::clearConsole () {        
@@ -85,4 +99,31 @@ void MinesweeperUtils::readInt(int& num) {
 void MinesweeperUtils::pauseConsole (bool includeMessage) {
     if (includeMessage) cout << endl << "Press any key to continue...";
     int prom = getchar();
+};
+
+vector <string> MinesweeperUtils::splitString (string str, string splitter) {
+    vector <string> result;
+    size_t found;
+    while ((found = str.find(splitter)) != string::npos) {
+        result.push_back(str.substr(0, found));
+        str = str.substr((int)found + splitter.length(), str.length());
+    }
+    if (str.length() != 0) result.push_back(str);
+    return result;
+}
+
+int MinesweeperUtils::stoi(string str) {
+    return atoi( str.c_str() );
+}
+
+string MinesweeperUtils::toDateString (long epoch) {
+    return asctime(gmtime((time_t*)epoch));
+}
+
+string MinesweeperUtils::convertTime (long seconds) {
+    long s = seconds % 60;
+    seconds /= 60;
+    long m = seconds % 60;
+    long h = seconds / 60;
+    return to_string(h) + "h" + to_string(m) + "m" + to_string(s) + "s";
 }
